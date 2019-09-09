@@ -1,0 +1,80 @@
+#
+# Copyright (c) 2018, 2019 Oracle and/or its affiliates. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: helidon-istio-movies-mp
+  labels:
+    app: helidon-istio-movies-mp
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: helidon-istio-movies-mp
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: helidon-istio-movies-mp
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: helidon-istio-movies-mp
+        version: v1
+    spec:
+      containers:
+        - name: helidon-istio-movies-mp
+          image: helidon-istio-movies-mp
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 8080
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: movies-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: helidon-istio-movies-mp
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - movies-gateway
+  http:
+    - match:
+        - uri:
+            exact: /movies
+      route:
+        - destination:
+            host: helidon-istio-movies-mp
+            port:
+              number: 8080
