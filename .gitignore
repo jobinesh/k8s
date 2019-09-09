@@ -1,0 +1,27 @@
+# build artifacts
+build/
+target/
+generated-srcs/
+
+# Eclipse artifacts
+/bin/
+.settings
+.classpath
+.project
+
+# IntelliJ artifacts
+.idea/
+src/.idea/
+*.log
+*.log.gz
+*.iml
+
+# Maven artifacts
+dependency-reduced-pom.xml
+pom.xml.versionsBackup
+dependency-list.txt
+effective-pom
+
+# OSX Junk
+.DS_Store
+.factorypath

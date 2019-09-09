@@ -73,6 +73,12 @@ spec:
     - match:
         - uri:
             exact: /movies
+        - uri:
+            exact: /greet
+        - uri:
+            exact: /health
+        - uri:
+            exact: /metrics
       route:
         - destination:
             host: helidon-istio-movies-mp
