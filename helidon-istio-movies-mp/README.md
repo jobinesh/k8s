@@ -1,7 +1,8 @@
 
 # Helidon Istio MP Example
 
-This example implements a simple REST service using MicroProfile that is proxied by Istio Service Mesh at runtime
+This example implements a simple REST service using MicroProfile that is proxied by Istio Service Mesh at runtime.  
+
 See this post to learn more: https://www.jobinesh.com/2019/09/setting-up-istio-service-mesh-for.html
 ## Prerequisites
 
