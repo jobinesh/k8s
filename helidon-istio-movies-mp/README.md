@@ -13,7 +13,8 @@ See this post to learn more: https://www.jobinesh.com/2019/09/setting-up-istio-s
    or access to a Kubernetes 1.7.4 or newer cluster
 5. Kubectl 1.7.4 or newer for deploying to Kubernetes
 6. Minikube
-7. Istio
+7. Istio   
+
 Verify prerequisites
 ```
 java -version
@@ -29,46 +30,9 @@ kubectl version --short
 mvn package
 ```
 
-## Start the application
+## Setting up Istio as api gateway for the microservice   
 
-```
-java -jar target/helidon-istio-movies-mp.jar
-```
-
-## Exercise the application
-
-```
-curl -X GET http://ipaddress:port/movies
-
-url -X GET http://ipaddress:port/greet
-{"message":"Hello World!"}
-
-curl -X GET http://ipaddress:port/greet/Joe
-{"message":"Hello Joe!"}
-
-curl -X PUT -H "Content-Type: application/json" -d '{"greeting" : "Hola"}' http://localhost:8080/greet/greeting
-
-curl -X GET http://ipaddress:port/greet/Jose
-{"message":"Hola Jose!"}
-```
-
-## Try health and metrics
-```
-curl -s -X GET http://ipaddress:port/health
-{"outcome":"UP",...
-. . .
-
-# Prometheus Format
-curl -s -X GET http://ipaddress:port/metrics
-# TYPE base:gc_g1_young_generation_count gauge
-. . .
-
-# JSON Format
-curl -H 'Accept: application/json' -X GET http://localhost:8080/metrics
-{"base":...
-. . .
-
-```
+To set up Istio as api gateway for the microservice that we built, do the the following steps:   
 
 ## To use the local docker env for minikube 
 
@@ -95,3 +59,39 @@ printenv GATEWAY_URL
 ```
 You can use the GATEWAY_URL printed on the console to access the service.
 For e.g: http://192.168.99.113:31380/movies
+    
+   
+## Exercise the application
+
+```
+curl -X GET http://ipaddress:port/movies
+
+url -X GET http://ipaddress:port/greet
+{"message":"Hello World!"}
+
+curl -X GET http://ipaddress:port/greet/Joe
+{"message":"Hello Joe!"}
+
+curl -X PUT -H "Content-Type: application/json" -d '{"greeting" : "Hola"}' http://localhost:8080/greet/greeting
+
+curl -X GET http://ipaddress:port/greet/Jose
+{"message":"Hola Jose!"}
+```    
+
+## Try health and metrics
+```
+curl -s -X GET http://ipaddress:port/health
+{"outcome":"UP",...
+. . .
+
+# Prometheus Format
+curl -s -X GET http://ipaddress:port/metrics
+# TYPE base:gc_g1_young_generation_count gauge
+. . .
+
+# JSON Format
+curl -H 'Accept: application/json' -X GET http://ipaddress:port/metrics
+{"base":...
+. . .
+
+```
