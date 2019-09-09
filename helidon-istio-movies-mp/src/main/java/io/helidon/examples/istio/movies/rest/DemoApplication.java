@@ -28,7 +28,7 @@ import java.util.Set;
  */
 @ApplicationScoped
 @ApplicationPath("/")
-public class MovieApplication extends Application {
+public class DemoApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
